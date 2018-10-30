@@ -26,7 +26,7 @@ Running all the cells in the notebook will install it automatically.
 ## Instructions
 The project consists of 8 files:
 * ContinuousControlProject.ipynb - run this file in Jupyter Notebook
-* agent.py - the Agent class
+* agent.py - the DDPG Agent class
 * network.py - the Actor and Critic models
 * memory.py - the replay buffer class
 * noise.py - the noise class
