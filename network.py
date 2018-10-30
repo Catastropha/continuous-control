@@ -30,8 +30,8 @@ class Actor(nn.Module):
 
     def reset_parameters(self):
         for layer in self.layers:
-            layer.weight.data.uniform_(-4, 4)
-        self.output.weight.data.uniform_(-4, 4)
+            layer.weight.data.uniform_(-1, 1)
+        self.output.weight.data.uniform_(-1, 1)
 
 
     def forward(self, states):
@@ -73,8 +73,8 @@ class Critic(nn.Module):
 
     def reset_parameters(self):
         for layer in self.layers:
-            layer.weight.data.uniform_(-4, 4)
-        self.output.weight.data.uniform_(-4, 4)
+            layer.weight.data.uniform_(-1, 1)
+        self.output.weight.data.uniform_(-1, 1)
 
     def forward(self, states, actions):
         """Build a critic (value) network that maps (state, action) pairs -> Q-values."""
