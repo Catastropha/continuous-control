@@ -18,6 +18,10 @@ class DDPGAgent:
         self.critic_local = config.critic_network_fn()
         self.critic_target = config.critic_network_fn()
         self.critic_optimizer = config.critic_optimizer_fn(self.critic_local.parameters())
+        
+        # ----------------------- initialize target networks ----------------------- #
+        self.soft_update(self.critic_local, self.critic_target, 1)
+        self.soft_update(self.actor_local, self.actor_target, 1)
 
         self.noise = config.noise_fn()
         
@@ -27,19 +31,20 @@ class DDPGAgent:
     def reset(self):
         self.noise.reset()
         
-    def act(self, state):            
+    def act(self, states):            
         """Returns actions for given state as per current policy."""
-        state = torch.from_numpy(state).float().to(self.config.device)
+        states = torch.from_numpy(states).float().to(self.config.device)
         self.actor_local.eval()
         with torch.no_grad():
-            action = self.actor_local(state).cpu().data.numpy()
+            actions = self.actor_local(states).cpu().data.numpy()
         self.actor_local.train()
-        action += self.noise.sample()
-        return np.clip(action, -1, 1)
+        actions += self.noise.sample()
+        return np.clip(actions, -1, 1)
         
-    def step(self, state, action, reward, next_state, done):
+    def step(self, states, actions, rewards, next_states, dones):
         # Save experience in replay memory
-        self.memory.add(state, action, reward, next_state, done)
+        for state, action, reward, next_state, done in zip(states, actions, rewards, next_states, dones):
+            self.memory.add(state, action, reward, next_state, done)
         
         # Learn every UPDATE_EVERY time steps.
         self.t_step = (self.t_step + 1) % self.config.update_every
@@ -71,7 +76,6 @@ class DDPGAgent:
         Q_targets = rewards + (gamma * Q_targets_next * (1 - dones))
         # Compute critic loss
         Q_expected = self.critic_local(states, actions)
-        # Loss 
         critic_loss = F.mse_loss(Q_expected, Q_targets)
         # Minimize the loss
         self.critic_optimizer.zero_grad()

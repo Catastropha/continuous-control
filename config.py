@@ -8,6 +8,7 @@ class Config:
         self.memory_fn = None
         self.noise_fn = None
         self.hidden_units = None
+        self.num_agents = 1
         
         self.actor_hidden_units = (64, 64)
         self.actor_network_fn = None
