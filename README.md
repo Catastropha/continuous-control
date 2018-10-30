@@ -1,4 +1,4 @@
-# continuous-control
+# continuous-control-DDPG
 Udacity deep learning continuous control project
 
 </br>
