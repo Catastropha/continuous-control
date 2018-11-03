@@ -20,7 +20,7 @@ class Config:
         self.critic_optimizer_fn = None
         self.critic_learning_rate = 0.003
         
-        self.tau = 1e3
+        self.tau = 1e-3
         self.weight_decay = 0
         self.states = None
         self.state_size = None
