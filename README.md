@@ -31,8 +31,8 @@ The project consists of 8 files:
 * memory.py - the replay buffer class
 * noise.py - the noise class
 * config.py - the configuration class
-* checkpoint-critic.pth - critic trained model
-* checkpoint-actor.pth - actor trained model
+* checkpoint_critic.pth - critic trained model
+* checkpoint_actor.pth - actor trained model
 * Report.md - description of the implementation
 
 Use Config() class to define all project configurations (hyperparameters, network, optimizers etc.)
